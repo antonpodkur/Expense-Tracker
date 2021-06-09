@@ -2,13 +2,13 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom'
 
 
-export default function Register(){
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    async function registerUser(e){
+    async function loginUser(e){
         e.preventDefault();
-        const result = await fetch('http://localhost:3000/api/user/register', {
+        const result = await fetch('http://localhost:3000/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,7 +19,8 @@ export default function Register(){
         console.log(result);
 
         if(res.status === 'ok'){
-            
+            console.log('Got the token: ', res.data);
+            localStorage.setItem('token', res.data);
         }else {
             alert(res.error);
         }
@@ -35,14 +36,14 @@ export default function Register(){
 
     return(
         <div>
-            <h1>Registration</h1>
+            <h1>Login</h1>
             <form>
                 <input type="text" value={email} onChange={onChangeEmail} placeholder="email"/>
                 <input type="text" value={password} onChange={onChangePassword} placeholder="password"/>
-                <button onClick={registerUser}>Register</button>
+                <button onClick={loginUser}>Register</button>
             </form>
-            <p>Already have an account?</p>
-            <Link to="/login">Log in</Link>
+            <p>Don`t have an account? Create it!</p>
+            <Link to="/register">Sign Up</Link>
         </div>
     );
 }
