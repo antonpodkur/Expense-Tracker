@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import ChangePassword from './components/ChangePassword';
 import Welcome from './components/Welcome';
+import Home from './components/Home';
 
 function App() {
   // const [logged, setLogged] = useState(false);
@@ -28,6 +29,7 @@ function App() {
             <Login />
           </Route>
           <PrivateRoute path="/change-password" component={ChangePassword}/>
+          <PrivateRoute path="/home" component={Home}/>
         </Switch>
       </BrowserRouter>
     </div>

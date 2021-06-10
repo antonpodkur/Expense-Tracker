@@ -6,12 +6,14 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 const userRoute = require('./routes/userRoute');
+const expenseRoute = require('./routes/expenseRoute');
 
 const app = express();
 
 app.use(require('cors')());
 app.use(express.json());
 app.use('/api/user', userRoute);
+app.use('/api/expense', expenseRoute);
 
 
 mongoose.connect(process.env.DB_CONNECTION,{

@@ -9,22 +9,6 @@ const {verifyJWT, verifyEmail, verifyPassword} = require('../verifications');
 
 router.post('/register', verifyEmail, verifyPassword, async (req,res) => {
     console.log(req.body);
-    // const {email, password: plainTextPassword} = req.body;
-
-    // if(!email || typeof email !== 'string' ){
-    //     return res.json({status: 'error', error: 'Invalid username'});
-    // }
-
-    // if(!plainTextPassword || typeof plainTextPassword !== 'string' ){
-    //     return res.json({status: 'error', error: 'Invalid password'});
-    // }
-
-    // if(plainTextPassword.length < 6){
-    //     return res.json({status: 'error', error: 'Password is too short. It should be atleast 6 characters'});
-    // }
-
-    // const email = req.email;
-    // const plainTextPassword = req.plainTextPassword;
 
     const {email, plainTextPassword} = req;
 
