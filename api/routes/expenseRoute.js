@@ -9,10 +9,10 @@ const ObjectId = require('mongodb').ObjectID;
 router.post('/addExpense',verifyJWT, async (req, res) => {
 
     const _id = req.userId;
-    const {date, time,description, amount, comment} = req.body;
+    const {datetime,description, amount, comment} = req.body;
 
     try{
-        const expense = await Expense.create({date,time,description, amount, comment, user_id: _id});
+        const expense = await Expense.create({datetime,description, amount, comment, user_id: _id});
         console.log('Expense has been created', expense);
         res.json({status: 'ok'});
     }catch(e){

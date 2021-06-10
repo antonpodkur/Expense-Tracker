@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact>
+          <Route path="/welcome">
             <Welcome />
           </Route>
           <Route path="/register">
@@ -29,7 +29,7 @@ function App() {
             <Login />
           </Route>
           <PrivateRoute path="/change-password" component={ChangePassword}/>
-          <PrivateRoute path="/home" component={Home}/>
+          <PrivateRoute path="/" exact component={Home}/>
         </Switch>
       </BrowserRouter>
     </div>
@@ -44,7 +44,7 @@ const PrivateRoute = (props) =>{
     else logged = false;
 
     return  logged ? (<Route  path={props.path}  exact={props.exact} component={props.component} />) : 
-        (<Redirect  to="/"  />);
+        (<Redirect  to="/welcome"  />);
 };
 
 
