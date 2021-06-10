@@ -161,15 +161,17 @@ export default function AllExpenses(){
         }
         if(date === undefined && time !== undefined) {
             newdatetime =  new Date(olddatetime);
-            const hours = time.slice(0,2);
-            const minutes = time.slice(3);
+            const hoursAndMinutes = time.split(':');
+            const hours = hoursAndMinutes[0];
+            const minutes = hoursAndMinutes[1];
             newdatetime.setHours(hours,minutes);
             console.log(newdatetime);
         }
         if(date!== undefined && time !== undefined) {
             newdatetime =  new Date(date);
-            const hours = time.slice(0,2);
-            const minutes = time.slice(3);
+            const hoursAndMinutes = time.split(':');
+            const hours = hoursAndMinutes[0];
+            const minutes = hoursAndMinutes[1];
             newdatetime.setHours(hours,minutes);
             console.log(newdatetime);
         }
@@ -230,7 +232,7 @@ export default function AllExpenses(){
                             <th onClick={sortByDate}>date</th>
                             <th onClick={sortByTime}>time</th>
                             <th onClick={sortByDescription}>description</th>
-                            <th onClick={sortByAmount}>amount</th>
+                            <th onClick={sortByAmount}>amount, $</th>
                             <th onClick={sortByComment}>comment</th>
                             {editing 
                                 ? <td><button onClick={() => setEditing(false)}>Finish</button></td>

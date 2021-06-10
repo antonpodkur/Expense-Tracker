@@ -7,6 +7,11 @@ export default function AddExpense() {
     const [amount, setAmount] = useState(0);
     const [comment, setComment] = useState('');
 
+    function addZero(num){
+        if(num.length === 1) return `0${num}`;
+        else return num;
+    }
+
     function onChangeDate(e){
         setDate(e.target.value);
     }
@@ -31,8 +36,9 @@ export default function AddExpense() {
     async function addExpense(e){
         e.preventDefault();
         const datetime = new Date(date);
-        const hours = time.slice(0,2);
-        const minutes = time.slice(3);
+        const hoursAndMinutes = time.split(':');
+        const hours = hoursAndMinutes[0];
+        const minutes = hoursAndMinutes[1];
         datetime.setHours(hours,minutes);
         const result = await fetch('http://localhost:3000/api/expense/addExpense', {
             method: 'POST',
