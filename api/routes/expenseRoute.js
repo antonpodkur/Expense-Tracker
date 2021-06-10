@@ -34,6 +34,22 @@ router.post('/getExpenses', verifyJWT, async (req, res) => {
     }
 })
 
+router.patch('/updateExpense', async (req,res) => {
+    const {_id ,datetime,description, amount, comment} = req.body;
+
+    try{
+        const expense = await Expense.updateOne({ _id },
+            {
+                $set: {datetime, description, amount, comment}
+            }  
+        )
+        console.log('Expense updated', expense);
+        res.json({status: 'ok'});
+    } catch(e) {
+        res.json({status: 'error', error: e.message});
+    }    
+});
+
 
 
 
