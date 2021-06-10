@@ -29,25 +29,28 @@ export default function AllExpenses(){
 
             <div>
                 <table>
-                    <tr>
-                        <th>date</th>
-                        <th>time</th>
-                        <th>description</th>
-                        <th>amount</th>
-                        <th>comment</th>
-                    </tr>
-                    {
-                        expenses && expenses.map((expense) => (
-                            <tr>
-                                <td>{expense.date}</td>
-                                <td>{expense.time}</td>
-                                <td>{expense.description}</td>
-                                <td>{expense.amount}</td>
-                                <td>{expense.comment}</td>
-                            </tr>
-                        ))
-                    }
-
+                    <thead>
+                        <tr>
+                            <th>date</th>
+                            <th>time</th>
+                            <th>description</th>
+                            <th>amount</th>
+                            <th>comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            expenses && expenses.map((expense, index) => (
+                                <tr key={index}>
+                                    <td>{expense.date}</td>
+                                    <td>{expense.time}</td>
+                                    <td>{expense.description}</td>
+                                    <td>{expense.amount}</td>
+                                    <td>{expense.comment}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
