@@ -216,6 +216,28 @@ export default function AllExpenses(){
         setComment(undefined);  
     };
 
+    const deleteData = async (e, _id) => {
+        e.preventDefault();
+        const result = await fetch('http://localhost:3000/api/expense/deleteExpense', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    _id
+                }
+            )
+        })
+        const res = await result.json();
+        console.log(result);
+
+        if(res.status === 'ok'){
+        }else {
+            alert(res.error);
+        }
+    }
+
     const refreshExpenses = (e) => {
         e.preventDefault();
         getExpenses();
@@ -255,6 +277,7 @@ export default function AllExpenses(){
                                             <td><input type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
                                             <td><input type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
                                             <td><button onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
+                                            <td><button onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
                                         </tr>
                                     :   <tr key={index}>
                                             <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>

@@ -51,6 +51,19 @@ router.patch('/updateExpense', async (req,res) => {
 });
 
 
+router.delete('/deleteExpense', async (req,res) => {
+    const {_id} = req.body;
+
+    try{
+        const expense = await Expense.deleteOne({_id});
+        res.json({status: 'ok'});
+        console.log('Expense deleted', expense);
+    } catch(e){
+        res.json({status: 'error', error: e.message});
+    }
+});
+
+
 
 
 module.exports = router;
