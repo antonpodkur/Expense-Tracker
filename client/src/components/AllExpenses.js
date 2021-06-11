@@ -1,15 +1,31 @@
 import {useState, useEffect} from 'react';
 
 export default function AllExpenses(){
+
+    // Expenses
     const [expenses, setExpenses] = useState([]);
     const [sortStates, setSortStates] = useState([true, true, true, true, true]);
 
-
+    // Expense fields to update
     const [date, setDate] = useState(undefined);
     const [time, setTime] = useState(undefined);
     const [description, setDescription] = useState(undefined);
     const [amount, setAmount] = useState(undefined);
     const [comment, setComment] = useState(undefined);
+
+    // filter states
+    const [dateToFind, setDateToFind] = useState('');
+    const [timeToFind, setTimeToFind] = useState('');
+    const [descriptionToFind, setDescriptionToFind] = useState('');
+    const [amountToFind, setAmountToFind] = useState('');
+    const [commentToFind, setCommentToFind] = useState('');
+
+    const [dateToFindFrom, setDateToFindFrom] = useState('');
+    const [dateToFindTo, setDateToFindTo] = useState('');
+    const [timeToFindFrom, setTimeToFindFrom] = useState('');
+    const [timeToFindTo, setTimeToFindTo] = useState('');
+    const [amountToFindFrom, setAmountToFindFrom] = useState('');
+    const [amountToFindTo, setAmountToFindTo] = useState('');
 
     const [editing, setEditing] = useState(false);
 
@@ -238,10 +254,238 @@ export default function AllExpenses(){
         }
     }
 
+    const finishEditing = (e) => {
+        e.preventDefault();
+        setEditing(false);
+        getExpenses();
+    }
+
     const refreshExpenses = (e) => {
         e.preventDefault();
         getExpenses();
     }
+
+    // filter fields binding
+
+    function onChangeDateToFind(e){
+        setDateToFind(e.target.value);
+    }
+
+    function onChangeTimeToFind(e){
+        console.log(e.target.value);
+        setTimeToFind(e.target.value);
+    }
+
+    function onChangeDescriptionToFind(e){
+        setDescriptionToFind(e.target.value);
+    }
+
+    function onChangeAmountToFind(e){
+        setAmountToFind(e.target.value);
+    }
+
+    function onChangeCommentToFind(e){
+        setCommentToFind(e.target.value);
+    }
+
+    // filter functions
+
+    const filter = () => {
+        let tmp = [...expenses];
+
+        // date range start
+
+        if(dateToFindFrom !== '' && dateToFindTo === '') {
+            tmp = tmp.filter(item => {
+                return new Date(item.datetime) > new Date(dateToFindFrom);
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(dateToFindFrom === '' && dateToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                return new Date(item.datetime) < new Date(dateToFindTo);
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(dateToFindFrom !== '' && dateToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                return new Date(item.datetime) > new Date(dateToFindFrom) && new Date(item.datetime) < new Date(dateToFindTo);
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        // date range end
+
+        // time range start 
+
+        if(timeToFindFrom !== '' && timeToFindTo === '') {
+            tmp = tmp.filter(item => {
+                let minutesFrom = timeToFindFrom.split(':')[0]*60 + timeToFindFrom.split(':')[1]*1;
+                let minutes = new Date(item.datetime).getHours()*60 + new Date(item.datetime).getMinutes();
+                console.log('minutes1')
+                console.log(minutes);
+                console.log(minutesFrom);
+                console.log(minutes > minutesFrom)
+                return minutes > minutesFrom;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(timeToFindFrom === '' && timeToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                let minutesTo = timeToFindTo.split(':')[0]*60 + timeToFindTo.split(':')[1]*1;
+                let minutes = new Date(item.datetime).getHours()*60 + new Date(item.datetime).getMinutes();
+                return minutes < minutesTo;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(timeToFindFrom !== '' && timeToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                let minutesFrom = timeToFindFrom.split(':')[0]*60 + timeToFindFrom.split(':')[1]*1;
+                let minutesTo = timeToFindTo.split(':')[0]*60 + timeToFindTo.split(':')[1]*1;
+                let minutes = new Date(item.datetime).getHours()*60 + new Date(item.datetime).getMinutes();
+                return minutes > minutesFrom && minutes < minutesTo;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        // time range end
+
+        // amount range start
+
+        if(amountToFindFrom !== '' && amountToFindTo === '') {
+            tmp = tmp.filter(item => {
+                return item.amount > amountToFindFrom;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(amountToFindFrom === '' && amountToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                return item.amount < amountToFindTo;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(amountToFindFrom !== '' && amountToFindTo !== '') {
+            tmp = tmp.filter(item => {
+                return item.amount > amountToFindFrom && item.amount < amountToFindTo;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        // amount range end
+
+        if(dateToFind !== ''){
+            tmp = tmp.filter(item => {
+                return `${new Date(item.datetime).getDate()}.${new Date(item.datetime).getMonth()}.${new Date(item.datetime).getFullYear()}` === `${new Date(dateToFind).getDate()}.${new Date(dateToFind).getMonth()}.${new Date(dateToFind).getFullYear()}`
+            });
+
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(timeToFind !== ''){
+            tmp = tmp.filter(item => {
+                console.log(`${new Date(item.datetime).getHours()}:${new Date(item.datetime).getMinutes()}` === timeToFind)
+                return `${new Date(item.datetime).getHours()}:${new Date(item.datetime).getMinutes()}` === timeToFind
+            });
+            console.log(tmp);
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(descriptionToFind !== ''){
+            tmp = tmp.filter(item => {
+                return item.description === descriptionToFind;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(amountToFind !== ''){
+            tmp = tmp.filter(item => {
+                return item.amount.toString(10) === amountToFind;
+            });
+            console.log(tmp);
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        if(commentToFind !== ''){
+            tmp = tmp.filter(item => {
+                return item.comment === commentToFind;
+            });
+        }
+        if(tmp === []) {
+            setExpenses([]);
+            return;
+        }
+
+        setExpenses(tmp);
+        // console.log(expenses);
+    }
+
+    const filterFind = (e) => {
+        e.preventDefault();
+        filter();
+    }
+
+    const filterClear = (e) => {
+        e.preventDefault();
+        setDateToFind('');
+        setTimeToFind('');
+        setDescriptionToFind('');
+        setAmountToFind('');
+        setCommentToFind('');
+        setDateToFindFrom('');
+        setDateToFindTo('');
+        setTimeToFindFrom('');
+        setTimeToFindTo('');
+        setAmountToFindFrom('');
+        setAmountToFindTo('');
+        getExpenses();
+    }
+
+    
 
     return(
         <div>
@@ -257,7 +501,7 @@ export default function AllExpenses(){
                             <th onClick={sortByAmount}>amount, $</th>
                             <th onClick={sortByComment}>comment</th>
                             {editing 
-                                ? <td><button onClick={() => setEditing(false)}>Finish</button></td>
+                                ? <td><button onClick={finishEditing}>Finish</button></td>
                                 : <td><button onClick={() => setEditing(true)}>Edit</button></td>
                             }
                             {!editing 
@@ -293,6 +537,38 @@ export default function AllExpenses(){
                         }
                     </tbody>
                 </table>
+            </div>
+
+            <div>
+                <h2>filters</h2>
+                <div>
+                    <h3>Find by</h3>
+                    <div>date: <input type="date" value={dateToFind} onChange={onChangeDateToFind} placeholder="date"/></div>
+                    <div>time: <input type="text" value={timeToFind} onChange={onChangeTimeToFind} placeholder="time (14:27)"/></div>
+                    <div>description: <input type="text" value={descriptionToFind} onChange={onChangeDescriptionToFind} placeholder="description"/></div>
+                    <div>amount: <input type="number" value={amountToFind} onChange={onChangeAmountToFind} placeholder="amount"/></div>
+                    <div>comment: <input type="text" value={commentToFind} onChange={onChangeCommentToFind} placeholder="comment"/></div>
+                </div>
+                <div>
+                        <h3>Ranges</h3>
+                        <div>date: 
+                            from <input type="date" value={dateToFindFrom} onChange={(e) => setDateToFindFrom(e.target.value)} placeholder="date"/>
+                            to <input type="date" value={dateToFindTo} onChange={(e) => setDateToFindTo(e.target.value)} placeholder="date"/>
+                        </div>
+                        <div>time: 
+                            from <input type="text" value={timeToFindFrom} onChange={(e) => setTimeToFindFrom(e.target.value)} placeholder="time"/>
+                            to <input type="text" value={timeToFindTo} onChange={(e) => setTimeToFindTo(e.target.value)} placeholder="time"/>
+                        </div>
+                        <div>amount: 
+                            from <input type="number" value={amountToFindFrom} onChange={(e) => setAmountToFindFrom(e.target.value)} placeholder="amount"/>
+                            to <input type="number" value={amountToFindTo} onChange={(e) => setAmountToFindTo(e.target.value)} placeholder="amount"/>
+                        </div>
+
+                </div>
+                <div>
+                    <button onClick={filterFind}>Find</button>
+                    <button onClick={filterClear}>Clear</button>
+                </div>
             </div>
         </div>
     );

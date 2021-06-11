@@ -7,11 +7,6 @@ export default function AddExpense() {
     const [amount, setAmount] = useState(0);
     const [comment, setComment] = useState('');
 
-    function addZero(num){
-        if(num.length === 1) return `0${num}`;
-        else return num;
-    }
-
     function onChangeDate(e){
         setDate(e.target.value);
     }
