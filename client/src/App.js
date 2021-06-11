@@ -7,6 +7,7 @@ import Login from './components/Login';
 import ChangePassword from './components/ChangePassword';
 import Welcome from './components/Welcome';
 import Home from './components/Home';
+import Statistics from './components/Statistics';
 
 function App() {
   // const [logged, setLogged] = useState(false);
@@ -30,6 +31,7 @@ function App() {
           </Route>
           <PrivateRoute path="/change-password" component={ChangePassword}/>
           <PrivateRoute path="/" exact component={Home}/>
+          <PrivateRoute path="/statistics" component={Statistics}/>
         </Switch>
       </BrowserRouter>
     </div>
