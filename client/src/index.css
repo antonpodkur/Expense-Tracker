@@ -29,6 +29,7 @@ code {
   min-width: 100px;
 }
 
+/* Styled table */
 .styled-table {
   /* border-collapse: collapse; */
   margin: 25px 0;
@@ -67,13 +68,30 @@ code {
   color: #009879;
 }
 
+/* Styled table end */
 
-@media screen and (max-width: 640px) {
+
+/* Styled table edit */
+
+
+
+/* Styled table edit end */
+
+.text-width {
+  width: 120px;
+}
+
+.other-width {
+  width: 50px;
+}
+
+
+@media only screen and (max-width: 640px) {
   .styled-table {
-    margin: 10px 0;
-    font-size: .1em;
+    margin: 15px 0;
+    font-size: .75em;
     font-family: 'Poppins', sans-serif;
-    min-width: 400px;
+    min-width: 100px;
   }
   
   .styled-table thead tr {
@@ -85,7 +103,16 @@ code {
   
   .styled-table th,
   .styled-table td {
-      padding: 12px 0px;
+      padding: 12px 5px;
+  }
+
+
+  .text-width {
+    width: 70px;
+  }
+  
+  .other-width {
+    width: 50px;
   }
 }
 

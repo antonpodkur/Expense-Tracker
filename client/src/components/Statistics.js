@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 
 export default function Statistics() {
     const [expenses, setExpenses] = useState([]);
@@ -9,6 +10,10 @@ export default function Statistics() {
     useEffect(()=>{
         getExpenses();
     },[]);
+
+    function Logout(){
+        localStorage.removeItem('token');
+    }
 
     const getExpenses = async () => {
         const result = await fetch('http://localhost:3000/api/expense/getExpenses', {
@@ -75,44 +80,60 @@ export default function Statistics() {
 
     return(
         <div>
-            <h1>Statistics</h1>
-            <div>
-                <h2>Expenses this week</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>date</th>
-                            <th>time</th>
-                            <th>description</th>
-                            <th>amount, $</th>
-                            <th>comment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentExpenses && currentExpenses.map((expense, index) => (
-                                    <tr key={index}>
-                                        <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>
-                                        <td>{`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}</td>
-                                        <td>{expense.description}</td>
-                                        <td>{expense.amount}</td>
-                                        <td>{expense.comment}</td>
-                                    </tr>
+            {/* Navbar */}
+            <div className="bg-green-900">
+                <nav className="flex flex-row py-4 px-3 cursive font-bold items-center text-center">
+                    <div className="py-1 px-4 text-white text-xl sm:text-2xl mr-auto header-btn">
+                        <Link to="/welcome" className="">Expense Tracker</Link>
+                    </div>
+                    <div className="bg-white py-1 px-2 rounded ml-auto header-btn text-center">
+                        <Link to="/" className="">Home</Link>
+                    </div>
+                    <div className="bg-red-800 text-white py-1 px-2 rounded ml-4 header-btn text-center">
+                        <Link to="/welcome" onClick={Logout}>Log out</Link>
+                    </div>
+                </nav>
+            </div>
+            <div className="mx-2 sm:mx-20 sm:my-20">
+                <div className="flex flex-col items-center my-5 mx-15 py-5 rounded regular bg-gray-200">
+                    <div className="font-bold text-2xl ">Expenses this week</div>
+                    <table className="styled-table">
+                        <thead>
+                            <tr>
+                                <th>date</th>
+                                <th>time</th>
+                                <th>description</th>
+                                <th>amount, $</th>
+                                <th>comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentExpenses && currentExpenses.map((expense, index) => (
+                                        <tr key={index}>
+                                            <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>
+                                            <td>{`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}</td>
+                                            <td>{expense.description}</td>
+                                            <td>{expense.amount}</td>
+                                            <td>{expense.comment}</td>
+                                        </tr>
+                                    )
+                                    
                                 )
-                                
-                            )
-                        }
-                    </tbody>
-                </table>
+                            }
+                        </tbody>
+                    </table>
+                    <div className="flex flex-col items-center my-5 text-xl">
+                        <h2>Total spent this week</h2>
+                        <h3 className="font-bold">{getSpentTotal() + "$"}</h3>
+                    </div>
+                    <div className="flex flex-col items-center my-5 text-xl">
+                        <h2>Average day spending</h2>
+                        <h3 className="font-bold">{getSpentTotal()/getAmountOfDays() + "$"}</h3>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h2>Total spent this week</h2>
-                <h3>{getSpentTotal()}</h3>
-            </div>
-            <div>
-                <h2>Average day spending</h2>
-                <h3>{getSpentTotal()/getAmountOfDays()}</h3>
-            </div>
+    
         </div>
     );
 }

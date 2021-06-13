@@ -28,6 +28,7 @@ export default function AllExpenses(){
     const [amountToFindTo, setAmountToFindTo] = useState('');
 
     const [editing, setEditing] = useState(false);
+    const [filters, setFilters] = useState(false);
 
     useEffect(()=>{
         getExpenses();
@@ -491,78 +492,84 @@ export default function AllExpenses(){
         <div className="flex flex-col items-center bg-gray-200 my-5 regular">
             <div className="my-5 text-2xl font-bold">All expenses</div>
 
-            <div className="flex flex-col items-center">
-                <div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
-                    <div className="font-bold text-xl my-5">Filters</div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 mx-6">
-                            <div className="flex flex-col items-center">
-                                <div className="text-lg font-bold mb-5">Find by</div>
-                                <div className="flex flex-col">
-                                    <div className="font-bold">Date:</div> 
-                                    <div>
-                                        <input className="rounded" type="date" value={dateToFind} onChange={onChangeDateToFind} placeholder="date"/>
-                                    </div>
-                                    <div className="font-bold">Time:</div>
-                                    <div>
-                                        <input className="rounded" type="text" value={timeToFind} onChange={onChangeTimeToFind} placeholder="time (14:27)"/>
-                                    </div>
-                                    <div className="font-bold">Description:</div>
-                                    <div> 
-                                        <input className="rounded" type="text" value={descriptionToFind} onChange={onChangeDescriptionToFind} placeholder="description"/>
-                                    </div>
-                                    <div className="font-bold">Amount:</div> 
-                                    <div>
-                                        <input className="rounded" type="number" value={amountToFind} onChange={onChangeAmountToFind} placeholder="amount"/>
-                                    </div>
-                                    <div className="font-bold">Comment:</div> 
-                                    <div>
-                                        <input className="rounded" type="text" value={commentToFind} onChange={onChangeCommentToFind} placeholder="comment"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-center mt-5 sm:mt-0">
-                                <div className="text-lg font-bold mb-5">Ranges</div>
-                                <div>
-                                    <div className="font-bold">Date:</div>
-                                    <div> 
-                                        from <input className="rounded" type="date" value={dateToFindFrom} onChange={(e) => setDateToFindFrom(e.target.value)} placeholder="date"/>
-                                    </div>
-                                    <div>
-                                        to <input className="rounded" type="date" value={dateToFindTo} onChange={(e) => setDateToFindTo(e.target.value)} placeholder="date"/>
-                                    </div>
-                                    <div className="font-bold mt-5">Time:</div>
-                                    <div>
-                                        from <input className="rounded" type="text" value={timeToFindFrom} onChange={(e) => setTimeToFindFrom(e.target.value)} placeholder="time"/>
-                                    </div>
-                                    <div>
-                                        to <input className="rounded" type="text" value={timeToFindTo} onChange={(e) => setTimeToFindTo(e.target.value)} placeholder="time"/>
-                                    </div>
-                                    <div className="font-bold mt-5">Amount:</div>
-                                    <div>
-                                        from <input className="rounded" type="number" value={amountToFindFrom} onChange={(e) => setAmountToFindFrom(e.target.value)} placeholder="amount"/>
-                                    </div>
-                                    <div>to <input className="rounded" type="number" value={amountToFindTo} onChange={(e) => setAmountToFindTo(e.target.value)} placeholder="amount"/></div>
-                                </div>
-                            </div>
-                        </div>
-                    <div>
+            <div className="flex flex-col items-center text">
+                <div className="text-center">
+                    <button className="font-bold text-xl my-5 header-btn mx-2 px-2 py-1 bg-green-800 rounded text-white">Filters</button>
                 </div>
-                        <div className="flex flex-row my-5">
-                            <button 
-                                onClick={filterFind}
-                                className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white"
-                            >
-                                Find
-                            </button>
-                            <button 
-                                onClick={filterClear}
-                                className="header-btn mx-2 px-2 py-1 bg-red-800 rounded font-bold text-white"
-                            >   
-                                Clear
-                            </button> 
+                    <div>
+                        <div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
+                            <div className="grid grid-cols-1 md:grid-cols-2 mx-6">
+                                <div className="flex flex-col items-center">
+                                    <div className="text-lg font-bold mb-5">Find by</div>
+                                    <div className="flex flex-col">
+                                        <div className="font-bold">Date:</div> 
+                                        <div>
+                                            <input className="rounded" type="date" value={dateToFind} onChange={onChangeDateToFind} placeholder="date"/>
+                                        </div>
+                                        <div className="font-bold">Time:</div>
+                                        <div>
+                                            <input className="rounded" type="text" value={timeToFind} onChange={onChangeTimeToFind} placeholder="time (14:27)"/>
+                                        </div>
+                                        <div className="font-bold">Description:</div>
+                                        <div> 
+                                            <input className="rounded" type="text" value={descriptionToFind} onChange={onChangeDescriptionToFind} placeholder="description"/>
+                                        </div>
+                                        <div className="font-bold">Amount:</div> 
+                                        <div>
+                                            <input className="rounded" type="number" value={amountToFind} onChange={onChangeAmountToFind} placeholder="amount"/>
+                                        </div>
+                                        <div className="font-bold">Comment:</div> 
+                                        <div>
+                                            <input className="rounded" type="text" value={commentToFind} onChange={onChangeCommentToFind} placeholder="comment"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-center mt-5 sm:mt-0">
+                                    <div className="text-lg font-bold mb-5">Ranges</div>
+                                    <div>
+                                        <div className="font-bold">Date:</div>
+                                        <div> 
+                                            from <input className="rounded" type="date" value={dateToFindFrom} onChange={(e) => setDateToFindFrom(e.target.value)} placeholder="date"/>
+                                        </div>
+                                        <div>
+                                            to <input className="rounded" type="date" value={dateToFindTo} onChange={(e) => setDateToFindTo(e.target.value)} placeholder="date"/>
+                                        </div>
+                                        <div className="font-bold mt-5">Time:</div>
+                                        <div>
+                                            from <input className="rounded" type="text" value={timeToFindFrom} onChange={(e) => setTimeToFindFrom(e.target.value)} placeholder="time"/>
+                                        </div>
+                                        <div>
+                                            to <input className="rounded" type="text" value={timeToFindTo} onChange={(e) => setTimeToFindTo(e.target.value)} placeholder="time"/>
+                                        </div>
+                                        <div className="font-bold mt-5">Amount:</div>
+                                        <div>
+                                            from <input className="rounded" type="number" value={amountToFindFrom} onChange={(e) => setAmountToFindFrom(e.target.value)} placeholder="amount"/>
+                                        </div>
+                                        <div>to <input className="rounded" type="number" value={amountToFindTo} onChange={(e) => setAmountToFindTo(e.target.value)} placeholder="amount"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div>
+                    </div>
+                            <div className="flex flex-row my-5">
+                                <button 
+                                    onClick={filterFind}
+                                    className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white"
+                                >
+                                    Find
+                                </button>
+                                <button 
+                                    onClick={filterClear}
+                                    className="header-btn mx-2 px-2 py-1 bg-red-800 rounded font-bold text-white"
+                                >   
+                                    Clear
+                                </button> 
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
 
                 
 
@@ -595,10 +602,10 @@ export default function AllExpenses(){
                                     (editing 
                                         ?   <tr key={index} className="text-sm">
                                                 <td><input className="ml-1 rounded" type="date" onChange={onChangeDate} placeholder="date"/></td>
-                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
-                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
-                                                <td><input className="ml-1 rounded" type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
-                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
+                                                <td><input className="ml-1 other-width rounded" type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
+                                                <td><input className="ml-1 text-width rounded" type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
+                                                <td><input className="ml-1 other-width rounded" type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
+                                                <td><input className="ml-1 text-width rounded" type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
                                                 <td><button className="ml-1 px-2 py-1 bg-green-800 rounded font-bold text-white" onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
                                                 <td><button className="ml-2 px-2 py-1 bg-red-800 rounded font-bold text-white" onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
                                             </tr>
