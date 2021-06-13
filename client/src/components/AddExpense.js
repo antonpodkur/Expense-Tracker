@@ -35,7 +35,7 @@ export default function AddExpense() {
         const hours = hoursAndMinutes[0];
         const minutes = hoursAndMinutes[1];
         datetime.setHours(hours,minutes);
-        const result = await fetch('http://localhost:3000/api/expense/addExpense', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/expense/addExpense`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

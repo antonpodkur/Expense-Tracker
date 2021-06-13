@@ -16,7 +16,7 @@ export default function Statistics() {
     }
 
     const getExpenses = async () => {
-        const result = await fetch('http://localhost:3000/api/expense/getExpenses', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/expense/getExpenses`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ export default function Login() {
 
     async function loginUser(e){
         e.preventDefault();
-        const result = await fetch('http://localhost:3000/api/user/login', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

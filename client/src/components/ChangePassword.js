@@ -6,7 +6,7 @@ export default function ChangePassword() {
 
     async function loginUser(e){
         e.preventDefault();
-        const result = await fetch('http://localhost:3000/api/user/change-password', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/user/change-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

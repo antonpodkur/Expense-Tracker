@@ -35,7 +35,7 @@ export default function AllExpenses(){
     },[]);
 
     const getExpenses = async () => {
-        const result = await fetch('http://localhost:3000/api/expense/getExpenses', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/expense/getExpenses`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -202,7 +202,7 @@ export default function AllExpenses(){
         if(comment !== undefined) newcomment = comment;
         else newcomment = oldcomment;
 
-        const result = await fetch('http://localhost:3000/api/expense/updateExpense', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/expense/updateExpense`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -235,7 +235,7 @@ export default function AllExpenses(){
 
     const deleteData = async (e, _id) => {
         e.preventDefault();
-        const result = await fetch('http://localhost:3000/api/expense/deleteExpense', {
+        const result = await fetch('${window.location.protocol}//${window.location.host}/api/expense/deleteExpense', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -504,7 +504,7 @@ export default function AllExpenses(){
                         ?<div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
                             <div className="grid grid-cols-1 md:grid-cols-2 mx-6">
                                 <div className="flex flex-col items-center">
-                                    <div className="text-lg font-bold mb-5">Find by</div>
+                                    <div className="text-lg font-bold mb-5 sm:pt-2">Find by</div>
                                     <div className="flex flex-col">
                                         <div className="font-bold">Date:</div> 
                                         <div>
@@ -529,7 +529,7 @@ export default function AllExpenses(){
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-center mt-5 sm:mt-0">
-                                    <div className="text-lg font-bold mb-5">Ranges</div>
+                                    <div className="text-lg font-bold mb-5 sm:pt-2">Ranges</div>
                                     <div>
                                         <div className="font-bold">Date:</div>
                                         <div> 
