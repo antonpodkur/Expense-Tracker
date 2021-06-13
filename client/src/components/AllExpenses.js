@@ -488,86 +488,130 @@ export default function AllExpenses(){
     
 
     return(
-        <div>
-            <h1>All expenses</h1>
+        <div className="flex flex-col items-center bg-gray-200 my-5 regular">
+            <div className="my-5 text-2xl font-bold">All expenses</div>
 
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th onClick={sortByDate}>date</th>
-                            <th onClick={sortByTime}>time</th>
-                            <th onClick={sortByDescription}>description</th>
-                            <th onClick={sortByAmount}>amount, $</th>
-                            <th onClick={sortByComment}>comment</th>
-                            {editing 
-                                ? <td><button onClick={finishEditing}>Finish</button></td>
-                                : <td><button onClick={() => setEditing(true)}>Edit</button></td>
-                            }
-                            {!editing 
-                                ? <td><button onClick={refreshExpenses}>Refresh</button></td>
-                                : ''
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            expenses && expenses.map((expense, index) => (
-                                (editing 
-                                    ?   <tr key={index}>
-                                            <td><input type="date" onChange={onChangeDate} placeholder="date"/></td>
-                                            <td><input type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
-                                            <td><input type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
-                                            <td><input type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
-                                            <td><input type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
-                                            <td><button onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
-                                            <td><button onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
-                                        </tr>
-                                    :   <tr key={index}>
-                                            <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>
-                                            <td>{`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}</td>
-                                            <td>{expense.description}</td>
-                                            <td>{expense.amount}</td>
-                                            <td>{expense.comment}</td>
-                                        </tr>
-
-                                )
-                                
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <h2>filters</h2>
-                <div>
-                    <h3>Find by</h3>
-                    <div>date: <input type="date" value={dateToFind} onChange={onChangeDateToFind} placeholder="date"/></div>
-                    <div>time: <input type="text" value={timeToFind} onChange={onChangeTimeToFind} placeholder="time (14:27)"/></div>
-                    <div>description: <input type="text" value={descriptionToFind} onChange={onChangeDescriptionToFind} placeholder="description"/></div>
-                    <div>amount: <input type="number" value={amountToFind} onChange={onChangeAmountToFind} placeholder="amount"/></div>
-                    <div>comment: <input type="text" value={commentToFind} onChange={onChangeCommentToFind} placeholder="comment"/></div>
+            <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
+                    <div className="font-bold text-xl my-5">Filters</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 mx-6">
+                            <div className="flex flex-col items-center">
+                                <div className="text-lg font-bold mb-5">Find by</div>
+                                <div className="flex flex-col">
+                                    <div className="font-bold">Date:</div> 
+                                    <div>
+                                        <input className="rounded" type="date" value={dateToFind} onChange={onChangeDateToFind} placeholder="date"/>
+                                    </div>
+                                    <div className="font-bold">Time:</div>
+                                    <div>
+                                        <input className="rounded" type="text" value={timeToFind} onChange={onChangeTimeToFind} placeholder="time (14:27)"/>
+                                    </div>
+                                    <div className="font-bold">Description:</div>
+                                    <div> 
+                                        <input className="rounded" type="text" value={descriptionToFind} onChange={onChangeDescriptionToFind} placeholder="description"/>
+                                    </div>
+                                    <div className="font-bold">Amount:</div> 
+                                    <div>
+                                        <input className="rounded" type="number" value={amountToFind} onChange={onChangeAmountToFind} placeholder="amount"/>
+                                    </div>
+                                    <div className="font-bold">Comment:</div> 
+                                    <div>
+                                        <input className="rounded" type="text" value={commentToFind} onChange={onChangeCommentToFind} placeholder="comment"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center mt-5 sm:mt-0">
+                                <div className="text-lg font-bold mb-5">Ranges</div>
+                                <div>
+                                    <div className="font-bold">Date:</div>
+                                    <div> 
+                                        from <input className="rounded" type="date" value={dateToFindFrom} onChange={(e) => setDateToFindFrom(e.target.value)} placeholder="date"/>
+                                    </div>
+                                    <div>
+                                        to <input className="rounded" type="date" value={dateToFindTo} onChange={(e) => setDateToFindTo(e.target.value)} placeholder="date"/>
+                                    </div>
+                                    <div className="font-bold mt-5">Time:</div>
+                                    <div>
+                                        from <input className="rounded" type="text" value={timeToFindFrom} onChange={(e) => setTimeToFindFrom(e.target.value)} placeholder="time"/>
+                                    </div>
+                                    <div>
+                                        to <input className="rounded" type="text" value={timeToFindTo} onChange={(e) => setTimeToFindTo(e.target.value)} placeholder="time"/>
+                                    </div>
+                                    <div className="font-bold mt-5">Amount:</div>
+                                    <div>
+                                        from <input className="rounded" type="number" value={amountToFindFrom} onChange={(e) => setAmountToFindFrom(e.target.value)} placeholder="amount"/>
+                                    </div>
+                                    <div>to <input className="rounded" type="number" value={amountToFindTo} onChange={(e) => setAmountToFindTo(e.target.value)} placeholder="amount"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    <div>
+                        <div className="flex flex-row my-5">
+                            <button 
+                                onClick={filterFind}
+                                className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white"
+                            >
+                                Find
+                            </button>
+                            <button 
+                                onClick={filterClear}
+                                className="header-btn mx-2 px-2 py-1 bg-red-800 rounded font-bold text-white"
+                            >   
+                                Clear
+                            </button> 
+                        </div>
+                    </div>
                 </div>
-                <div>
-                        <h3>Ranges</h3>
-                        <div>date: 
-                            from <input type="date" value={dateToFindFrom} onChange={(e) => setDateToFindFrom(e.target.value)} placeholder="date"/>
-                            to <input type="date" value={dateToFindTo} onChange={(e) => setDateToFindTo(e.target.value)} placeholder="date"/>
-                        </div>
-                        <div>time: 
-                            from <input type="text" value={timeToFindFrom} onChange={(e) => setTimeToFindFrom(e.target.value)} placeholder="time"/>
-                            to <input type="text" value={timeToFindTo} onChange={(e) => setTimeToFindTo(e.target.value)} placeholder="time"/>
-                        </div>
-                        <div>amount: 
-                            from <input type="number" value={amountToFindFrom} onChange={(e) => setAmountToFindFrom(e.target.value)} placeholder="amount"/>
-                            to <input type="number" value={amountToFindTo} onChange={(e) => setAmountToFindTo(e.target.value)} placeholder="amount"/>
-                        </div>
 
-                </div>
-                <div>
-                    <button onClick={filterFind}>Find</button>
-                    <button onClick={filterClear}>Clear</button>
+                
+
+                <div className="flex flex-col items-center my-5">
+                    <div className="text-xl font-bold">Expenses</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th onClick={sortByDate}>date</th>
+                                <th onClick={sortByTime}>time</th>
+                                <th onClick={sortByDescription}>description</th>
+                                <th onClick={sortByAmount}>amount, $</th>
+                                <th onClick={sortByComment}>comment</th>
+                                {editing 
+                                    ? <td><button onClick={finishEditing}>Finish</button></td>
+                                    : <td><button onClick={() => setEditing(true)}>Edit</button></td>
+                                }
+                                {!editing 
+                                    ? <td><button onClick={refreshExpenses}>Refresh</button></td>
+                                    : ''
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                expenses && expenses.map((expense, index) => (
+                                    (editing 
+                                        ?   <tr key={index}>
+                                                <td><input type="date" onChange={onChangeDate} placeholder="date"/></td>
+                                                <td><input type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
+                                                <td><input type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
+                                                <td><input type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
+                                                <td><input type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
+                                                <td><button onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
+                                                <td><button onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
+                                            </tr>
+                                        :   <tr key={index}>
+                                                <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>
+                                                <td>{`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}</td>
+                                                <td>{expense.description}</td>
+                                                <td>{expense.amount}</td>
+                                                <td>{expense.comment}</td>
+                                            </tr>
+
+                                    )
+                                    
+                                ))
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

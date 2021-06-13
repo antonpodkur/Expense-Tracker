@@ -60,14 +60,50 @@ export default function AddExpense() {
     }
 
     return (
-        <div>
-            <h1>Add Expense</h1>
-            <input type="date" value={date} onChange={onChangeDate} placeholder="date"/>
-            <input type="text" value={time} onChange={onChangeTime} placeholder="time (ex. 14:32)"/>
-            <input type="text" value={description} onChange={onChangeDescription} placeholder="description"/>
-            <input type="number" value={amount} onChange={onChangeAmount} placeholder="amount"/>
-            <input type="text" value={comment} onChange={onChangeComment} placeholder="comment"/>
-            <button onClick={addExpense}>Add</button>
+        <div className="flex flex-col items-center bg-gray-200 rounded regular">
+            <div className="text-2xl font-bold py-5">Add Expense</div>
+            <div className="flex flex-col lg:flex-row">
+                <input 
+                    type="date" 
+                    value={date} 
+                    onChange={onChangeDate} 
+                    placeholder="date"
+                    className="mb-5 rounded mx-1"
+                    />
+                <input 
+                    type="text" 
+                    value={time} 
+                    onChange={onChangeTime} 
+                    placeholder="time (ex. 14:32)"
+                    className="mb-5 rounded mx-1"
+                    />
+                <input 
+                    type="text" 
+                    value={description} 
+                    onChange={onChangeDescription} 
+                    placeholder="description"
+                    className="mb-5 rounded mx-1"
+                    />
+                <input 
+                    type="number" 
+                    value={amount} 
+                    onChange={onChangeAmount} 
+                    placeholder="amount"
+                    className="mb-5 rounded mx-1"
+                    />
+                <input 
+                    type="text" 
+                    value={comment} 
+                    onChange={onChangeComment} 
+                    placeholder="comment"
+                    className="mb-5 rounded mx-1"
+                    />
+            </div>
+            <button 
+                    onClick={addExpense}
+                    className="w-5/6 rounded bg-green-800 text-white mb-5 font-bold"
+                    >Add
+                </button>
         </div>
     );
 };

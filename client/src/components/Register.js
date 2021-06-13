@@ -34,15 +34,30 @@ export default function Register(){
     }
 
     return(
-        <div>
-            <h1>Registration</h1>
-            <form>
-                <input type="text" value={email} onChange={onChangeEmail} placeholder="email"/>
-                <input type="text" value={password} onChange={onChangePassword} placeholder="password"/>
-                <button onClick={registerUser}>Register</button>
-            </form>
-            <p>Already have an account?</p>
-            <Link to="/login">Log in</Link>
+        <div className="flex flex-col items-center content-center regular">
+            <div className="text-3xl py-10 font-bold">Registration</div>
+            <div className="flex flex-col items-center content-center">
+                <input 
+                    type="text" 
+                    value={email} 
+                    onChange={onChangeEmail}
+                    placeholder="email" 
+                    className="rounded mb-5 py-1 px-2" 
+                    />
+                <input 
+                    type="text" 
+                    value={password} 
+                    onChange={onChangePassword} 
+                    placeholder="password"
+                    className="rounded mb-10 py-1 px-2"
+                    />
+                <button 
+                    onClick={registerUser}
+                    className="bg-green-700 px-2 py-1 rounded text-white font-bold mb-10"
+                    >
+                        Register
+                </button>
+            </div>
         </div>
     );
 }

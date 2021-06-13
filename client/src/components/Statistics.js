@@ -61,6 +61,18 @@ export default function Statistics() {
         return num;
     }
 
+    const getAmountOfDays = () => {
+        let temp = [];
+        currentExpenses.forEach(item => {
+            const tempDate = `${new Date(item.datetime).getDate()}.${new Date(item.datetime).getMonth() + 1 }.${new Date(item.datetime).getFullYear()}`;
+            if(!temp.includes(tempDate)){
+                temp.push(tempDate);
+            }
+        })
+        if (temp.length === 0) return 1;
+        return temp.length;
+    }
+
     return(
         <div>
             <h1>Statistics</h1>
@@ -99,7 +111,7 @@ export default function Statistics() {
             </div>
             <div>
                 <h2>Average day spending</h2>
-                <h3>{getSpentTotal()/currentExpenses.length}</h3>
+                <h3>{getSpentTotal()/getAmountOfDays()}</h3>
             </div>
         </div>
     );
