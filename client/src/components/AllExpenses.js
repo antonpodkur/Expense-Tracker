@@ -546,6 +546,7 @@ export default function AllExpenses(){
                             </div>
                         </div>
                     <div>
+                </div>
                         <div className="flex flex-row my-5">
                             <button 
                                 onClick={filterFind}
@@ -567,38 +568,41 @@ export default function AllExpenses(){
 
                 <div className="flex flex-col items-center my-5">
                     <div className="text-xl font-bold">Expenses</div>
-                    <table>
+                    <div className="flex my-2">
+                        {editing 
+                                        ? <button onClick={finishEditing} className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white">Finish</button>
+                                        : <button onClick={() => setEditing(true)} className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white">Edit</button>
+                                    }
+                                    {!editing 
+                                        ? <button onClick={refreshExpenses} className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white ml-2">Refresh</button>
+                                        : ''
+                                    }
+                    </div>
+        
+                    <table className="my-5 styled-table">
                         <thead>
-                            <tr>
+                            <tr className="text-xs">
                                 <th onClick={sortByDate}>date</th>
                                 <th onClick={sortByTime}>time</th>
                                 <th onClick={sortByDescription}>description</th>
                                 <th onClick={sortByAmount}>amount, $</th>
                                 <th onClick={sortByComment}>comment</th>
-                                {editing 
-                                    ? <td><button onClick={finishEditing}>Finish</button></td>
-                                    : <td><button onClick={() => setEditing(true)}>Edit</button></td>
-                                }
-                                {!editing 
-                                    ? <td><button onClick={refreshExpenses}>Refresh</button></td>
-                                    : ''
-                                }
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 expenses && expenses.map((expense, index) => (
                                     (editing 
-                                        ?   <tr key={index}>
-                                                <td><input type="date" onChange={onChangeDate} placeholder="date"/></td>
-                                                <td><input type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
-                                                <td><input type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
-                                                <td><input type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
-                                                <td><input type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
-                                                <td><button onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
-                                                <td><button onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
+                                        ?   <tr key={index} className="text-sm">
+                                                <td><input className="ml-1 rounded" type="date" onChange={onChangeDate} placeholder="date"/></td>
+                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeTime} placeholder={`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}/></td>
+                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeDescription} placeholder={expense.description}/></td>
+                                                <td><input className="ml-1 rounded" type="number" onChange={onChangeAmount} placeholder={expense.amount}/></td>
+                                                <td><input className="ml-1 rounded" type="text" onChange={onChangeComment} placeholder={expense.comment}/></td>
+                                                <td><button className="ml-1 px-2 py-1 bg-green-800 rounded font-bold text-white" onClick={(e) => saveData(e,expense.datetime, expense.description, expense.amount, expense.comment, expense._id)}>Save</button></td>
+                                                <td><button className="ml-2 px-2 py-1 bg-red-800 rounded font-bold text-white" onClick={(e) => deleteData(e,expense._id)}>Delete</button></td>
                                             </tr>
-                                        :   <tr key={index}>
+                                        :   <tr key={index} className="text-sm">
                                                 <td>{`${new Date(expense.datetime).getDate()}.${new Date(expense.datetime).getMonth() + 1 }.${new Date(expense.datetime).getFullYear()}`}</td>
                                                 <td>{`${new Date(expense.datetime).getHours()}:${new Date(expense.datetime).getMinutes()}`}</td>
                                                 <td>{expense.description}</td>
@@ -614,6 +618,5 @@ export default function AllExpenses(){
                     </table>
                 </div>
             </div>
-        </div>
     );
 }
