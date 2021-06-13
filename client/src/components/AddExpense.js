@@ -101,7 +101,7 @@ export default function AddExpense() {
             </div>
             <button 
                     onClick={addExpense}
-                    className="w-5/6 rounded bg-green-800 text-white mb-5 font-bold"
+                    className="w-5/6 rounded bg-green-800 text-white mb-5 font-bold py-1"
                     >Add
                 </button>
         </div>
