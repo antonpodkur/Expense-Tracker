@@ -97,6 +97,10 @@ export default function Statistics() {
                 <h2>Total spent this week</h2>
                 <h3>{getSpentTotal()}</h3>
             </div>
+            <div>
+                <h2>Average day spending</h2>
+                <h3>{getSpentTotal()/currentExpenses.length}</h3>
+            </div>
         </div>
     );
 }
