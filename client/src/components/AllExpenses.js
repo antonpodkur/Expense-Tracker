@@ -485,19 +485,23 @@ export default function AllExpenses(){
         setAmountToFindTo('');
         getExpenses();
     }
-
     
 
     return(
         <div className="flex flex-col items-center bg-gray-200 my-5 regular">
-            <div className="my-5 text-2xl font-bold">All expenses</div>
+            <div className="my-5 text-3xl font-bold">All expenses</div>
 
             <div className="flex flex-col items-center text">
                 <div className="text-center">
-                    <button className="font-bold text-xl my-5 header-btn mx-2 px-2 py-1 bg-green-800 rounded text-white">Filters</button>
+                    <button 
+                        className="font-bold text-xl my-5 header-btn mx-2 px-2 py-1 bg-green-800 rounded text-white"
+                        onClick={() => setFilters(!filters)}
+                    >
+                        Filters
+                    </button>
                 </div>
-                    <div>
-                        <div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
+                {filters
+                        ?<div className="flex flex-col items-center lg:bg-gray-300 rounded w-5/6 sm:w-full">
                             <div className="grid grid-cols-1 md:grid-cols-2 mx-6">
                                 <div className="flex flex-col items-center">
                                     <div className="text-lg font-bold mb-5">Find by</div>
@@ -549,32 +553,32 @@ export default function AllExpenses(){
                                     </div>
                                 </div>
                             </div>
-                        <div>
-                    </div>
-                            <div className="flex flex-row my-5">
-                                <button 
-                                    onClick={filterFind}
-                                    className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white"
-                                >
-                                    Find
-                                </button>
-                                <button 
-                                    onClick={filterClear}
-                                    className="header-btn mx-2 px-2 py-1 bg-red-800 rounded font-bold text-white"
-                                >   
-                                    Clear
-                                </button> 
+                            <div>
+                                <div className="flex flex-row my-5">
+                                    <button 
+                                        onClick={filterFind}
+                                        className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white"
+                                    >
+                                        Find
+                                    </button>
+                                    <button 
+                                        onClick={filterClear}
+                                        className="header-btn mx-2 px-2 py-1 bg-red-800 rounded font-bold text-white"
+                                    >   
+                                        Clear
+                                    </button> 
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        : ""
+                    }
                 </div>
-
 
 
                 
 
                 <div className="flex flex-col items-center my-5">
-                    <div className="text-xl font-bold">Expenses</div>
+                    {/* <div className="text-xl font-bold">Expenses</div> */}
                     <div className="flex my-2">
                         {editing 
                                         ? <button onClick={finishEditing} className="header-btn mx-2 px-2 py-1 bg-green-800 rounded font-bold text-white">Finish</button>

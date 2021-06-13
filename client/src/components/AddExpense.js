@@ -61,7 +61,7 @@ export default function AddExpense() {
 
     return (
         <div className="flex flex-col items-center bg-gray-200 rounded regular">
-            <div className="text-2xl font-bold py-5">Add Expense</div>
+            <div className="text-3xl font-bold py-5">Add Expense</div>
             <div className="flex flex-col lg:flex-row">
                 <input 
                     type="date" 
