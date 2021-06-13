@@ -12,13 +12,11 @@ const app = express();
 
 // app.use(require('cors')());
 app.use(express.json());
-app.use('/api/user', userRoute);
-app.use('/api/expense', expenseRoute);
-
-
 if(process.env.NODE_ENV==='production') {
     app.use(express.static('../client/build'))
 }
+app.use('/api/user', userRoute);
+app.use('/api/expense', expenseRoute);
 
 mongoose.connect(process.env.DB_CONNECTION,{
     useNewUrlParser: true,
