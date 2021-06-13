@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-// require('dotenv').config();
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,8 +15,17 @@ app.use(express.json());
 if(process.env.NODE_ENV==='production') {
     app.use(express.static('../client/build'))
 }
+
 app.use('/api/user', userRoute);
 app.use('/api/expense', expenseRoute);
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '..', 'client', 'build/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
 
 mongoose.connect(process.env.DB_CONNECTION,{
     useNewUrlParser: true,

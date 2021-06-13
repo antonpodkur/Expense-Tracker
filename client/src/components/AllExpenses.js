@@ -235,7 +235,7 @@ export default function AllExpenses(){
 
     const deleteData = async (e, _id) => {
         e.preventDefault();
-        const result = await fetch('${window.location.protocol}//${window.location.host}/api/expense/deleteExpense', {
+        const result = await fetch(`${window.location.protocol}//${window.location.host}/api/expense/deleteExpense`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
