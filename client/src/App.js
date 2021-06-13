@@ -17,18 +17,18 @@ function App() {
   // },[])
 
   return (
-    <div className="App">
+    <div className="App" exact>
       <BrowserRouter>
         <Switch>
-          <Route path="/welcome">
+          <Route path="/welcome" exact>
             <Welcome />
           </Route>
-          <Route path="/login">
+          <Route path="/login" exact>
             <Login />
           </Route>
-          <PrivateRoute path="/change-password" component={ChangePassword}/>
+          <PrivateRoute path="/change-password" exact component={ChangePassword}/>
           <PrivateRoute path="/" exact component={Home}/>
-          <PrivateRoute path="/statistics" component={Statistics}/>
+          <PrivateRoute path="/statistics" exact component={Statistics}/>
         </Switch>
       </BrowserRouter>
     </div>
